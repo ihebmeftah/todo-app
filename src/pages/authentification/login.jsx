@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { TextField, Box, Button } from "@mui/material";
+import { TextField, Box, Button, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
 export default function LoginComponent() {
@@ -33,6 +33,18 @@ export default function LoginComponent() {
   return (
     <HorizontalCentering
       elment=<div>
+        <Typography variant="h4" marginBottom={5}>
+          Todo managment application Login
+        </Typography>
+        {authSuccess && (
+          <div className="SuccessMeassageComponent">
+            {" "}
+            Authentifcation done successfully
+          </div>
+        )}
+        {authFailed && (
+          <div className="ErrorMeassageComponent"> Authentifcation failed </div>
+        )}
         <TextField
           fullWidth
           margin="dense"
@@ -47,9 +59,10 @@ export default function LoginComponent() {
           label="Password"
           type="password"
           required
-          placeholder="************" onChange={onchangePassword}
+          placeholder="************"
+          onChange={onchangePassword}
         />
-        <Button variant="contained" size="large" fullWidth onClick={login}>
+        <Button variant="contained" size="large"  fullWidth onClick={login}>
           Login
         </Button>
         <Button variant="text" fullWidth>
