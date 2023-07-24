@@ -1,12 +1,18 @@
 import './App.css';
 import LoginComponent from './pages/authentification/login';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import WelcomeComponent from './pages/welcome/welcome';
 import ListeTodoComponent from './pages/listetodo/listedo';
 import HeaderComponent from './layout/header';
 import FooterComponent from './layout/footer';
-import AuthProvider from './secuirty/authcontext';
-
+import AuthProvider, { useAuth } from './secuirty/authcontext';
+function AuthincateRoute({children}){
+  const authcontext = useAuth()
+  if (authcontext.isAuthenticated) {
+    return children
+  }
+  return  <Navigate to="/" / >
+}
 function App() {
   return (
     <div className="App">
@@ -16,8 +22,8 @@ function App() {
           <Routes>
             <Route path="/" element={<LoginComponent />} />
             <Route path="/authentification" element={<LoginComponent />} />
-            <Route path="/welcome" element={<WelcomeComponent />} />
-            <Route path="/listTodos" element={<ListeTodoComponent />} />
+            <Route path="/welcome" element={<AuthincateRoute> <WelcomeComponent /> </AuthincateRoute> } />
+            <Route path="/listTodos" element={<AuthincateRoute> <ListeTodoComponent /> </AuthincateRoute> } />
           </Routes>
           <FooterComponent />
         </BrowserRouter>
