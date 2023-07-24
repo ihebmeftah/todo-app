@@ -2,6 +2,7 @@ import { useState } from "react";
 
 import { TextField, Box, Button, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../secuirty/authcontext";
 
 export default function LoginComponent() {
   const [username, setUsername] = useState("");
@@ -9,7 +10,7 @@ export default function LoginComponent() {
   const [authSuccess, setauthSuccess] = useState(false);
   const [authFailed, setauthFailed] = useState(false);
   const navigate = useNavigate();
-
+  const authcontext = useAuth();
   function onchangeUsername(event) {
     console.log(event.target.value);
     setUsername(event.target.value);
@@ -22,17 +23,19 @@ export default function LoginComponent() {
 
   function login() {
     if (username === "iheb meftah" && password === "1234") {
+      authcontext.setAuthenticated(true);
       setauthSuccess(true);
       setauthFailed(false);
       navigate(`/welcome`);
     } else {
+      authcontext.setAuthenticated(false);
       setauthFailed(true);
       setauthSuccess(false);
     }
   }
   return (
-    <HorizontalCentering
-      elment=<div>
+    <HorizontalCentering>
+      <div>
         <Typography variant="h4" marginBottom={5}>
           Todo managment application Login
         </Typography>
@@ -62,18 +65,18 @@ export default function LoginComponent() {
           placeholder="************"
           onChange={onchangePassword}
         />
-        <Button variant="contained" size="large"  fullWidth onClick={login}>
+        <Button variant="contained" size="large" fullWidth onClick={login}>
           Login
         </Button>
         <Button variant="text" fullWidth>
           Create account
         </Button>
       </div>
-    />
+    </HorizontalCentering>
   );
 }
 
-function HorizontalCentering(props) {
+function HorizontalCentering({ children }) {
   return (
     <Box
       sx={{
@@ -92,7 +95,7 @@ function HorizontalCentering(props) {
         textAlign: "center",
       }}
     >
-      {props.elment}
+      {children}
     </Box>
   );
 }

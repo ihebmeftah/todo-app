@@ -10,7 +10,7 @@ import AuthProvider from './secuirty/authcontext';
 function App() {
   return (
     <div className="App">
-      <AuthProvider>
+      <AuthProvider >
         <BrowserRouter>
           <HeaderComponent />
           <Routes>
