@@ -18,7 +18,7 @@ const isAuthenticated = authcontext.isAuthenticated
                 </div>
                 <ul className="navbar-nav">
                     {!isAuthenticated  && <li className="nav-item fs-5"><Link className="nav-link" to="/authentification">Login</Link></li>}
-                    {isAuthenticated  && <li className="nav-item fs-5"><Link className="nav-link" to="/authentification" onClick={()=>authcontext.setAuthenticated(false)}>Logout</Link></li>}
+                    {isAuthenticated  && <li className="nav-item fs-5"><Link className="nav-link" to="/authentification" onClick={()=>authcontext.logout()}>Logout</Link></li>}
                 </ul>
             </nav>
         </div>

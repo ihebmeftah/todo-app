@@ -7,7 +7,6 @@ import { useAuth } from "../../secuirty/authcontext";
 export default function LoginComponent() {
   const [username, setUsername] = useState("");
   const [password, setpassword] = useState("");
-  const [authSuccess, setauthSuccess] = useState(false);
   const [authFailed, setauthFailed] = useState(false);
   const navigate = useNavigate();
   const authcontext = useAuth();
@@ -22,15 +21,10 @@ export default function LoginComponent() {
   }
 
   function login() {
-    if (username === "iheb meftah" && password === "1234") {
-      authcontext.setAuthenticated(true);
-      setauthSuccess(true);
-      setauthFailed(false);
+    if (authcontext.login(username , password)) {
       navigate(`/welcome`);
     } else {
-      authcontext.setAuthenticated(false);
       setauthFailed(true);
-      setauthSuccess(false);
     }
   }
   return (
@@ -39,12 +33,7 @@ export default function LoginComponent() {
         <Typography variant="h4" marginBottom={5}>
           Todo managment application Login
         </Typography>
-        {authSuccess && (
-          <div className="SuccessMeassageComponent">
-            {" "}
-            Authentifcation done successfully
-          </div>
-        )}
+      
         {authFailed && (
           <div className="ErrorMeassageComponent"> Authentifcation failed </div>
         )}
